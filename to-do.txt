@@ -1,0 +1,6 @@
+Update Customer profile
+implement Create User function
+
+implement route to get Exercises for a user (workout? UserExercises?)
+
+Hours:5

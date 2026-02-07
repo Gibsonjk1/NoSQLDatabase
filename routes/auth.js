@@ -5,14 +5,17 @@ const passport = require('passport');
 
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 router.get('/google/callback', 
-    passport.authenticate('google', { failureRedirect: '/' }),
+    passport.authenticate('google', { failureRedirect: '/exercise' }),
     (req, res) => {
         // Successful authentication, redirect home.
-        res.redirect('/');
+        console.log('Authenticated User:', req.user);
+        res.redirect('/user/google/' + req.user.googleId); // Redirect to user profile or desired page
     }
 );
+router.get('/logout', util.handleErrors(authController.logout));
+
 //router.get('/login', util.handleErrors(authController.isloggedIn));
-//router.get('/logout', util.handleErrors(authController.logout));
+
 //router.post('/login', passport.authenticate('local'), util.handleErrors(authController.login));
 
 module.exports = router;

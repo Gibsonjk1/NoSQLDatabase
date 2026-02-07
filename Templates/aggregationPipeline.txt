@@ -1,0 +1,1 @@
+db.exercises.aggregate([ { $match: { "strengthProfile": { $elemMatch: { muscleId: "chest", minStrength: { $lte: 55 }, maxStrength: { $gte: 55 } } }, primaryFocus: "strength", active: true }}, { $sample: { size: 10 } } ])

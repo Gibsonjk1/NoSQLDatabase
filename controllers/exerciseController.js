@@ -14,45 +14,91 @@ const getExerciseById = async (req, res) => {
   res.status(200).json({message: 'Get exercise by ID - Not yet implemented'});
 };
 
-const createExercise = async (req, res) => {
-  const newExercise = {
-      "name": req.body.name,
-      "description": req.body.description,
-      "dificulty": req.body.dificulty, 
-      "isVariation": req.body.isVariation, 
-      "progressionOrder": req.body.progressionOrder,
-      "muscleGroups": req.body.muscleGroups,
-      "equipment": req.body.equipment,
-      "videoUrl": req.body.videoUrl
+const createExercises = async (req, res) => {
+  try {
+    const exercises = req.body.exercises; // Expect an array of exercises
+
+    if (!Array.isArray(exercises) || exercises.length === 0) {
+      return res.status(400).json({ message: 'Request must include a non-empty array of exercises.' });
     }
- const create = await mongodb.getDb().db('RandR').collection('Exercise').insertOne(newExercise);
-  if(create.acknowledged)
-    {
-      res.status(201).json({message: "Exercise Created"})
-    }else{
-  res.status(400).json(err || 'an error occurred while saving the exercise');
- }
+
+    // Insert all exercises at once
+    const result = await mongodb
+      .getDb()
+      .db('RandR')
+      .collection('Exercise')
+      .insertMany(exercises);
+
+    if (result.acknowledged) {
+      res.status(201).json({ message: `${result.insertedCount} exercises created successfully.` });
+    } else {
+      res.status(400).json({ message: 'An error occurred while saving the exercises.' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error', error: err });
+  }
 };
 
 const updateExercise = async (req, res) => {
-  const updateExercise = {
-      "name": req.body.name,
-      "description": req.body.description,
-      "dificulty": req.body.dificulty, 
-      "isVariation": req.body.isVariation, 
-      "progressionOrder": req.body.progressionOrder,
-      "muscleGroups": req.body.muscleGroups,
-      "equipment": req.body.equipment,
-      "videoUrl": req.body.videoUrl
+  try {
+    const exerciseId = req.params.id;
+
+    // Fields that are allowed to be updated
+    const allowedFields = [
+      "name",
+      "category",
+      "equipment",
+      "difficulty",
+      "primaryFocus",
+      "secondaryFocus",
+      "description",
+      "exampleMedia",
+      "strengthProfile",
+      "mobility",
+      "contraindications",
+      "active"
+    ];
+
+    // Filter request body against whitelist
+    const updates = Object.fromEntries(
+      Object.entries(req.body).filter(([key]) =>
+        allowedFields.includes(key)
+      )
+    );
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({
+        message: "No valid fields provided for update"
+      });
     }
-  const id = new ObjectId(req.params.id);
-  const update = await mongodb.getDb().db('RandR').collection('Exercise').replaceOne({_id: id}, updateExercise);
-  if(update.modifiedCount > 0)
-    {
-      res.status(204).send();
-    }else{
-  res.status(400).json(err || 'an error occurred while updating the exercise');
- }
+
+    const result = await mongodb
+      .getDb()
+      .db("RandR")
+      .collection("Exercise")
+      .updateOne(
+        { _id: exerciseId },
+        { $set: updates }
+      );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({
+        message: "Exercise not found"
+      });
+    }
+
+    res.status(200).json({
+      message: "Exercise updated successfully"
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Server error",
+      error: err
+    });
+  }
 };
 
 const deleteExercise = async (req, res) => {
@@ -69,7 +115,7 @@ const deleteExercise = async (req, res) => {
 module.exports = {
   getAllExercises,
   getExerciseById,
-  createExercise,
+  createExercises,
   updateExercise,
   deleteExercise
 };

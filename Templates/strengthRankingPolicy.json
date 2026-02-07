@@ -1,0 +1,12 @@
+{
+  "strengthRankingPolicy": {
+    "roleWeights": {
+      "primary": 1.0,
+      "secondary": 0.6,
+      "stabilizer": 0.4
+    },
+    "aggregation": "min_primary",
+    "secondaryContribution": "average",
+    "stabilizerContribution": "cap_only"
+  }
+}

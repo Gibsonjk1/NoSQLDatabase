@@ -1,0 +1,104 @@
+{
+  "_id": "user_12345",
+
+  "profile": {
+    "firstName": "Alex",
+    "lastName": "Smith",
+    "age": 32,
+    "heightCm": 178,
+    "weightKg": 75
+  },
+
+  "strengthProfile": {
+    "upperBody": [
+      { "muscleId": "chest", "strength": 55 },
+
+      { "muscleId": "anterior_deltoids", "strength": 50 },
+      { "muscleId": "lateral_deltoids", "strength": 48 },
+      { "muscleId": "posterior_deltoids", "strength": 46 },
+
+      { "muscleId": "biceps", "strength": 50 },
+      { "muscleId": "triceps", "strength": 52 },
+      { "muscleId": "forearms", "strength": 48 },
+
+      { "muscleId": "latissimus_dorsi", "strength": 50 },
+      { "muscleId": "rhomboids", "strength": 45 },
+      { "muscleId": "middle_trapezius", "strength": 45 },
+      { "muscleId": "lower_trapezius", "strength": 42 }
+    ],
+
+    "core": [
+      { "muscleId": "rectus_abdominis", "strength": 55 },
+      { "muscleId": "transverse_abdominis", "strength": 50 },
+      { "muscleId": "internal_obliques", "strength": 48 },
+      { "muscleId": "external_obliques", "strength": 48 },
+      { "muscleId": "erector_spinae", "strength": 52 }
+    ],
+
+    "lowerBody": [
+      { "muscleId": "gluteus_maximus", "strength": 60 },
+      { "muscleId": "gluteus_medius", "strength": 55 },
+
+      { "muscleId": "quadriceps", "strength": 58 },
+      { "muscleId": "hamstrings", "strength": 54 },
+
+      { "muscleId": "adductors", "strength": 50 },
+      { "muscleId": "calves", "strength": 52 }
+    ]
+  },
+
+  "mobilityProfile": {
+    "upperBody": {
+      "shoulders": 65,
+      "elbows": 70,
+      "wrists": 55,
+      "thoracic_spine": 60
+    },
+    "lowerBody": {
+      "hips": 60,
+      "knees": 65,
+      "ankles": 55
+    },
+    "balance": 45
+  },
+
+  "preferences": {
+    "primaryGoal": "strength",
+    "secondaryGoals": ["balance"],
+    "availableEquipment": ["bodyweight", "dumbbells"],
+    "workoutDurationMinutes": 45
+  },
+
+  "exercisePreferences": {
+    "likes": ["ex_pushup", "ex_rows"],
+    "dislikes": ["ex_burpees"],
+    "avoidIfPossible": ["ex_running"]
+  },
+
+  "restrictions": {
+    "contraindications": ["wrist_pain"]
+  },
+
+  "rehabState": {
+    "activeInjuries": [
+      {
+        "joint": "shoulder",
+        "side": "right",
+        "severity": 2,
+        "allowedLoad": 40,
+        "notes": "Impingement; avoid overhead pressing"
+      }
+    ]
+  },
+
+  "activity": {
+    "experienceLevel": 3,
+    "sessionsPerWeek": 4
+  },
+
+  "system": {
+    "active": true,
+    "createdAt": "2026-02-01T18:22:00.000Z",
+    "updatedAt": "2026-02-01T18:22:00.000Z"
+  }
+}
