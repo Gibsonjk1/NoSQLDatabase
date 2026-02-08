@@ -1,23 +1,8 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../db/connection');
 const { get } = require('http');
+const { flattenObject } = require('../utilities');
 
-const flattenObject = (obj, parentKey = "", result = {}) => {
-  for (const key in obj) {
-    const fullKey = parentKey ? `${parentKey}.${key}` : key;
-
-    if (
-      obj[key] !== null &&
-      typeof obj[key] === "object" &&
-      !Array.isArray(obj[key])
-    ) {
-      flattenObject(obj[key], fullKey, result);
-    } else {
-      result[fullKey] = obj[key];
-    }
-  }
-  return result;
-};
 
 const getAllUsers = async (req, res) => {
   try {
@@ -69,7 +54,6 @@ const createUser = async (req, res) => {
     const now = new Date();
 
     const newUser = {
-      _id: new ObjectId(),
 
       profile: {
         firstName: profile.firstName,
@@ -161,7 +145,7 @@ const createUser = async (req, res) => {
     };
 
     const db = mongodb.getDb().db("RandR");
-    const result = await db.collection("Users").insertOne(newUser);
+    const result = await db.collection("User").insertOne(newUser);
 
     if (!result.acknowledged) {
       return res.status(500).json({ message: "Failed to create user" });
@@ -228,7 +212,7 @@ const ALLOWED_UPDATE_PATHS = [
     const flattenedUpdates = flattenObject(req.body);
 
     const updates = {};
-    
+
     for (const key of Object.keys(flattenedUpdates)) {
       if (ALLOWED_UPDATE_PATHS.includes(key)) {
         updates[key] = flattenedUpdates[key];
@@ -242,7 +226,7 @@ const ALLOWED_UPDATE_PATHS = [
     updates["system.updatedAt"] = new Date();
 
     const db = mongodb.getDb().db("RandR");
-    const result = await db.collection("Users").updateOne(
+    const result = await db.collection("User").updateOne(
       { _id: new ObjectId(userId) },
       { $set: updates }
     );

@@ -1,7 +1,7 @@
 //local
 GET http://localhost:3000/user
 ###
-GET http://localhost:3000/user/68f464fc7bbc542f6fbcd2f3
+GET http://localhost:3000/user/698789858cbde3db2c837723
 
 //create user
 ###
@@ -9,32 +9,41 @@ POST http://localhost:3000/user/
 content-type: application/json
 
 {
-      "username": "BobbetteTheBuilder",
-      "email": "IamBobbette@builder.com",
-      "firstName": "Bobbette",
-      "lastName": "TheBuilder",
-      "password": "YesSheCan!"
+  "profile": {
+    "firstName": "Alex",
+    "lastName": "Smith",
+    "age": 32,
+    "heightCm": 178,
+    "weightKg": 75
+  },
+  "experienceLevel": 3,
+  "primaryGoal": "strength",
+  "secondaryGoals": ["balance", "mobility"],
+  "availableEquipment": ["bodyweight", "dumbbells"],
+  "workoutDurationMinutes": 45,
+  "contraindications": ["wrist_pain"],
+  "activeInjuries": [
+    {
+      "joint": "shoulder",
+      "side": "right",
+      "severity": 2,
+      "allowedLoad": 40,
+      "notes": "Impingement; avoid overhead pressing"
+    }
+  ]
 }
 
+//update user
 ###
-DELETE http://localhost:3000/user/68f464fc7bbc542f6fbcd2f3/
-
-//production
-###
-
-GET https://randr-9pxd.onrender.com/user
-###
-GET https://randr-9pxd.onrender.com/user/68f464fc7bbc542f6fbcd2f3
-
-//create user
-###
-POST https://randr-9pxd.onrender.com/user/ 
-content-type: application/json
+PUT http://localhost:3000/user/698789858cbde3db2c837723
+Content-Type: application/json
 
 {
-      "username": "BobbetteTheBuilder",
-      "email": "IamBobbette@builder.com",
-      "firstName": "Bobbette",
-      "lastName": "TheBuilder",
-      "password": "YesSheCan!"
+  "profile": {
+    "age": 34
+  }
 }
+
+//delete user
+###
+DELETE http://localhost:3000/user/68f464fc7bbc542f6fbcd2f3/

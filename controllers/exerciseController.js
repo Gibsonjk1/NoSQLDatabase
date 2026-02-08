@@ -1,5 +1,6 @@
 const { ObjectId } = require('mongodb');
 const mongodb = require('../db/connection');
+const { flattenObject } = require('../utilities');
 
 const getAllExercises = async (req, res) => {
   try {
@@ -42,10 +43,10 @@ const createExercises = async (req, res) => {
 
 const updateExercise = async (req, res) => {
   try {
-    const exerciseId = req.params.id;
+    const exerciseId = new ObjectId(req.params.id);
 
     // Fields that are allowed to be updated
-    const allowedFields = [
+    const ALLOWED_UPDATE_PATHS = [
       "name",
       "category",
       "equipment",
@@ -54,16 +55,23 @@ const updateExercise = async (req, res) => {
       "secondaryFocus",
       "description",
       "exampleMedia",
-      "strengthProfile",
-      "mobility",
+      "strengthProfile.upperBody",
+      "strengthProfile.core",
+      "strengthProfile.lowerBody",
+      "mobility.upperBody",
+      "mobility.lowerBody",
+      "mobility.balance",
       "contraindications",
       "active"
     ];
 
     // Filter request body against whitelist
-    const updates = Object.fromEntries(
-      Object.entries(req.body).filter(([key]) =>
-        allowedFields.includes(key)
+    const updates = flattenObject(req.body);
+
+    // Filter request body against whitelist
+    const filteredUpdates = Object.fromEntries(
+      Object.entries(updates).filter(([key]) =>
+        ALLOWED_UPDATE_PATHS.includes(key)
       )
     );
 

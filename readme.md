@@ -1,80 +1,42 @@
-# Setting up a TypeScript project
+# RandR BackEnd (No SQL Database)
 
-## Initialize your project
-`npm init`
+This code represents an app I am trying to build that will suggest progressive exercises for a user. it will keep track of their strength and mobility profile, injuries, preferences, etc. and suggest appropriate exercises to help them build strength and mobility.
 
-## Install the TypeScript module as a dev dependency
-`npm install typescript --save-dev`
+## Instructions for Build and Use
 
-## Initilize your TypeScript project using npx and tsc
-`npx tsc --init`
+[Software Demo] https://youtu.be/6ZDfa_d5ZTI
 
-## Replace the contents of your tsconfig.json file
-```
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": [ "src/**/*" ],
-  "exclude": [ "node_modules" ]
-}
-```
+Steps to build and/or run the software:
 
-## Create a src folder
+1. install npm packages with npm i
+2. run npm start
 
-`mkdir src`
+Instructions for using the software:
 
-## Create your main app TypeScript file: app.ts in the src folder
+1. this is the backend, so it is just calling routes.
+2. in the testing.rest file, there are example api calls you can run for the user
+3. to test exercises, run GET http://localhost:3000/exercise
 
-`src/app.ts`
+## Development Environment
 
-## Modify your package.json file
+To recreate the development environment, you need the following software and/or libraries with the specified versions:
 
-### Set your main property to the compiled result of your TypeScript project
-`"main": "dist/app.js"`
+- see package.json Dependencies and dev dependencies
+-
+-
 
-## Modify the scripts section of your package.json 
-```
-  "scripts": {
-    "build": "tsc",
-    "start": "node dist/app.js",
-    "dev": "nodemon --watch src --exec ts-node src/app.ts"
-  }
-```
+## Useful Websites to Learn More
 
-## Install Express, ts-node, nodemon, @types/express, and @types/node as dev dependencies
+I found these websites useful in developing this software:
 
-`npm install express ts-node nodemon @types/express @types/node --save-dev`
+- W3 Schools - https://www.w3schools.com/mongodb/
+- MongoDb Docs - https://www.mongodb.com/docs/get-started/?language=nodejs
+- hygraph - https://hygraph.com/learn/graphql
 
-## Create a src folder and create your app.ts file
+## Future Work
 
-```
-import express, { Application, Request, Response } from 'express';
+The following items I plan to fix, improve, and/or add to this project in the future:
 
-const app: Application = express();
-const PORT = process.env.PORT || 3000;
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from Express with TypeScript!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running: http://localhost:${PORT}`);
-});
-```
-
-## Build your project
-`npm run build`
-
-## Run your project
-`npm run start`
-
-## Run your project and watch for file changes to trigger automatic rebuild
-`npm run dev`
+- [ ] update Javascript to Typescript
+- [ ] Build a front-end GUI
+- [ ] create logic for updating the strength and mobility profile as you go
